@@ -13,6 +13,10 @@ const OUTCOMES = {
     title: "Invalid link",
     body: "This action link is invalid or has expired.",
   },
+  "rate-limited": {
+    title: "Too many attempts.",
+    body: "Please wait a few minutes and try the booking link again.",
+  },
 } as const;
 
 type OutcomeKey = keyof typeof OUTCOMES;

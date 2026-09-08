@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 // encoding overhead) — this only exists to reject wildly oversized bodies.
 const MAX_ACTION_BODY_BYTES = 2 * 1024;
 
-type ResultOutcome = "confirmed" | "declined" | "already-processed" | "invalid";
+type ResultOutcome = "confirmed" | "declined" | "already-processed" | "invalid" | "rate-limited";
 
 function resultRedirect(request: Request, outcome: ResultOutcome, emailFailed = false) {
   const url = new URL("/booking/action/result", request.url);
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   // and must never make legitimate owner clicks flaky.
   const rateLimit = await checkRateLimit("bookingAction", getClientIp(request));
   if (rateLimit.limited) {
-    return resultRedirect(request, "invalid");
+    return resultRedirect(request, "rate-limited");
   }
 
   const token = await readToken(request);

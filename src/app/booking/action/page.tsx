@@ -86,9 +86,12 @@ export default async function BookingActionPage({ searchParams }: BookingActionP
     );
   }
 
+  // Only what this preview page actually renders — the POST route
+  // (src/app/api/booking-action/route.ts) still fetches the full row,
+  // since it genuinely needs email/phone/etc. for the customer email.
   const { data: booking, error } = await supabase
     .from("bookings")
-    .select("*")
+    .select("id, full_name, start_date, end_date, guests, status")
     .eq("id", verified.payload.bookingId)
     .maybeSingle();
 
