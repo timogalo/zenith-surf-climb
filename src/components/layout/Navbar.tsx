@@ -21,7 +21,7 @@ export default function Navbar() {
           {name}
         </a>
 
-        <ul className="hidden items-center gap-12 md:flex">
+        <ul className="hidden items-center gap-12 lg:flex">
           {links.map((link) => (
             <li key={link.href}>
               <a
@@ -40,7 +40,7 @@ export default function Navbar() {
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="flex h-10 w-10 items-center justify-center text-warm-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-white focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-navy md:hidden"
+          className="flex h-10 w-10 items-center justify-center text-warm-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-white focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-navy lg:hidden"
         >
           <svg
             aria-hidden="true"
@@ -64,7 +64,7 @@ export default function Navbar() {
         id="mobile-menu"
         className={`${
           isMenuOpen ? "block" : "hidden"
-        } bg-ocean-navy px-6 pb-6 md:hidden`}
+        } bg-ocean-navy px-6 pb-6 lg:hidden`}
       >
         <ul className="flex flex-col gap-4">
           {links.map((link) => (
