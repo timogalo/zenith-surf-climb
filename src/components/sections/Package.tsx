@@ -32,10 +32,6 @@ export default function Package() {
               </p>
             </div>
 
-            {/*
-              Booking is not implemented yet — this points at #booking, a
-              section that will be added in a later task, per instruction.
-            */}
             <a
               href={cta.href}
               className="group mt-10 inline-flex items-center gap-2 rounded-full bg-terracotta px-7 py-3.5 font-body text-sm font-medium tracking-wide text-warm-white transition-[color,background-color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.015] hover:bg-terracotta/90 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-white focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-navy motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"

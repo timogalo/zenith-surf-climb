@@ -69,14 +69,6 @@ export default function FinalCTA() {
               </p>
             </Reveal>
 
-            {/*
-              No confirmed contact email, phone or booking URL exists in the
-              project yet. href points at this section's own id ("#contact")
-              rather than a bare "#" so it never causes a jarring jump to the
-              top of the page during a demo — clicking it is a safe no-op.
-              Replace with the real contact destination once the client
-              confirms it.
-            */}
             <Reveal durationMs={580} delayMs={350}>
               <a
                 href={cta.href}

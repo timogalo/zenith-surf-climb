@@ -9,10 +9,11 @@ export const siteContent = {
   nav: {
     links: [
       { label: "About", href: "#about" },
-      { label: "Surf / Climb / Create", href: "#experiences" },
+      { label: "Surf. Climb. Create.", href: "#experiences" },
       { label: "Morocco", href: "#morocco" },
       { label: "Gallery", href: "#gallery" },
       { label: "Contact", href: "#contact" },
+      { label: "Book", href: "#booking" },
     ],
   },
 
@@ -242,8 +243,8 @@ export const siteContent = {
     eyebrow: "Next Step",
     headline: "Ready to experience Zenith?",
     cta: {
-      label: "Get in touch",
-      href: "#contact",
+      label: "Reserve your week",
+      href: "#booking",
     },
   },
 };

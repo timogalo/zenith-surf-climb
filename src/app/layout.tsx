@@ -25,15 +25,38 @@ const title = "Zenith Surf & Climb";
 const description =
   "Zenith Surf & Climb is an adventure retreat in Morocco blending surf, climbing and creative workshops with Moroccan culture and community.";
 
+// The final custom domain hasn't been confirmed by the client yet. Prefer
+// NEXT_PUBLIC_SITE_URL (already used elsewhere for booking action links —
+// see docs/booking-backend.md) so this tracks whatever's configured per
+// environment; fall back to the current production Vercel URL only when
+// that isn't set (e.g. local dev without it configured), rather than
+// inventing a client domain that doesn't exist yet.
+const PRODUCTION_FALLBACK_URL = "https://zenith-surf-climbb.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || PRODUCTION_FALLBACK_URL;
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title,
   description,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title,
     description,
     siteName: title,
     type: "website",
     locale: "en_US",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
   },
 };
 
