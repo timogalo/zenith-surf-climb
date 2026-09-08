@@ -77,6 +77,100 @@ export const siteContent = {
     ],
   },
 
+  week: {
+    eyebrow: "A Week at Zenith",
+    heading: "Seven days. More than one adventure.",
+    intro:
+      "No two days at Zenith feel the same. Move between the Atlantic, the mountains and the rhythm of Moroccan life — surfing, climbing, creating, slowing down and discovering the places in between.",
+    activities: [
+      {
+        number: "01",
+        title: "Surf Lessons",
+        copy: "Atlantic mornings, coached sessions and time in the water.",
+      },
+      {
+        number: "02",
+        title: "Yoga",
+        copy: "Slow down, reset and find balance between the more active days.",
+      },
+      {
+        number: "03",
+        title: "Climbing",
+        copy: "Leave the coast behind and discover Morocco from the rock.",
+      },
+      {
+        number: "04",
+        title: "Sand Surfing",
+        copy: "Trade ocean waves for the dunes.",
+      },
+      {
+        number: "05",
+        title: "Souk / Market",
+        copy: "Colours, spices, food and the everyday rhythm of Morocco.",
+      },
+      {
+        number: "06",
+        title: "Skate Park",
+        copy: "Another kind of movement, away from the water.",
+      },
+      {
+        number: "07",
+        title: "Hammam",
+        copy: "A traditional Moroccan ritual and a chance to properly unwind.",
+      },
+      {
+        number: "08",
+        title: "Desert Bonfire",
+        copy: "An evening outside, gathered around the fire.",
+      },
+      {
+        number: "09",
+        title: "Creative Time",
+        copy: "Space to make, experiment and express yourself.",
+      },
+    ],
+  },
+
+  stay: {
+    eyebrow: "Your Home for the Week",
+    heading: "A place to slow down between adventures.",
+    body: "After days spent moving, exploring and discovering Morocco, Zenith gives you space to slow down, connect and make yourself at home.",
+    supportingLine:
+      "Seven nights. One base. A week shaped by movement, culture and connection.",
+  },
+
+  package: {
+    eyebrow: "The Complete Experience",
+    heading: "One week. Everything in one rhythm.",
+    body: "Seven nights built around movement, creativity and Morocco — with your stay, daily rhythm and shared experiences brought together into one complete week.",
+    price: "€900",
+    priceNote: "per person · 7 nights",
+    schedule: "Monday → Monday",
+    included: [
+      { label: "Stay", value: "7 nights" },
+      { label: "Meals", value: "Breakfast & dinner" },
+      { label: "Transport", value: "Local transport during the programme" },
+      { label: "Experiences", value: "Surf, climb, move, create & explore" },
+      {
+        label: "Activities",
+        value:
+          "Surf lessons · Yoga · Sand surfing · Souk / market · Skate park · Climbing · Hammam · Desert bonfire · Creative time",
+      },
+    ],
+    cta: {
+      label: "Reserve your week",
+      href: "#booking",
+    },
+  },
+
+  paradiseValley: {
+    eyebrow: "Paradise Valley · Imouzzer",
+    heading: "Wild water. Red rock. Endless palms.",
+    body: "Beyond the Atlantic lies another side of Morocco. Paradise Valley winds through rock, palms and natural pools — a place to swim, explore and slow down between the mountains.",
+    supportingLine: "A change of rhythm, only a journey away from the coast.",
+    metadata: ["Natural Pools", "Atlas Foothills", "Palm Valley"],
+  },
+
   morocco: {
     eyebrow: "Rooted in Morocco",
     headline: {
@@ -116,6 +210,32 @@ export const siteContent = {
         alt: "A hiker overlooking the Atlantic coastline and mountains of Morocco",
       },
     ],
+  },
+
+  booking: {
+    eyebrow: "Reserve Your Week",
+    heading: "Choose your week. We’ll take care of the rest.",
+    intro:
+      "Choose a Monday-to-Monday week and send us your reservation request. No payment is required now — we’ll confirm your stay personally.",
+    confirmationNote:
+      "Your reservation is confirmed only after you receive confirmation from Zenith.",
+    pricePerPerson: 900,
+    included: ["Breakfast", "Dinner", "Transport", "Zenith programme"],
+    emptyWeekPrompt: "Choose a week to continue.",
+    form: {
+      fullNameLabel: "Full name",
+      emailLabel: "Email",
+      phoneLabel: "Phone / WhatsApp",
+      countryLabel: "Country",
+      messageLabel: "Message",
+      submitLabel: "Request this week",
+    },
+    success: {
+      heading: "Your request is on its way.",
+      body: "We’ve received your reservation request for {dates}. Zenith will get back to you personally to confirm your stay.",
+      note: "No payment has been taken.",
+      resetLabel: "Send another request",
+    },
   },
 
   finalCta: {

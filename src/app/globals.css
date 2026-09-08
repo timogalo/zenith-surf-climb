@@ -40,3 +40,19 @@ body {
     animation: none;
   }
 }
+
+/* Booking form fields only: Chrome/WebKit paints its own pale-blue
+   background on autofilled inputs, which can't be overridden with a plain
+   background-color (the browser keeps re-applying it). The inset
+   box-shadow trick is the standard workaround — it paints the section's
+   own warm-sand color over the autofill fill so the underline-field look
+   survives autofill instead of showing a filled box. */
+.booking-field:-webkit-autofill,
+.booking-field:-webkit-autofill:hover,
+.booking-field:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-ocean-navy);
+  caret-color: var(--color-ocean-navy);
+  box-shadow: 0 0 0 1000px var(--color-warm-sand) inset;
+  -webkit-box-shadow: 0 0 0 1000px var(--color-warm-sand) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}

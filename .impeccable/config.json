@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "src/lib/email/layout.ts"
+        ],
+        "createdAt": "2026-09-08T17:29:21.405Z",
+        "reason": "domain-appropriate: transactional email HTML must use web-safe fonts (Arial/Helvetica), custom fonts like Space Grotesk are unreliable across email clients"
+      }
+    ]
+  }
+}
