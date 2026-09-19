@@ -4,8 +4,21 @@ import Reveal from "@/components/motion/Reveal";
 import ImageReveal from "@/components/motion/ImageReveal";
 import Parallax from "@/components/motion/Parallax";
 
-const themeGapClasses = ["mr-8", "mr-14", "mr-10"];
-const themeOffsetClasses = ["", "translate-y-1", "-translate-y-1", "translate-y-0.5"];
+// Photography curation pass: the detail inset previously reused the main
+// image's own file (a different crop of the same photo), then briefly used
+// zenith-coast-02 (which just re-created a different duplicate, with
+// Experiences → Surf). This is an unused Paradise Valley photo instead —
+// genuinely unique across the whole homepage, and still fits About's
+// "broader Zenith environment / Morocco / landscape" brief as a small,
+// subtle accent (an archway framing the palm valley and mountains).
+// Cropped top-weighted (see object-position below) specifically to keep
+// the archway/landscape view and leave out the terrace furniture in the
+// original photo's foreground, avoiding an accidental "random poolside"
+// read in a section that isn't about the property.
+const detailImage = {
+  src: "/images/paradise-valley/paradise-valley-04.jpg",
+  alt: "",
+};
 
 export default function About() {
   const { eyebrow, heading, paragraphs, themes, image } = siteContent.about;
@@ -50,13 +63,11 @@ export default function About() {
                 aria-hidden="true"
                 className="block h-px w-12 bg-terracotta/50"
               />
-              <ul className="mt-6 flex flex-wrap items-baseline gap-y-4">
-                {themes.map((theme, index) => (
+              <ul className="mt-6 flex flex-wrap items-baseline gap-x-8 gap-y-4 lg:grid lg:grid-cols-4 lg:gap-x-6 lg:gap-y-0">
+                {themes.map((theme) => (
                   <li
                     key={theme}
-                    className={`font-heading text-sm font-normal uppercase tracking-[0.06em] text-ocean-navy/90 ${
-                      index < themes.length - 1 ? themeGapClasses[index] : ""
-                    } ${themeOffsetClasses[index] ?? ""}`}
+                    className="font-heading text-sm font-normal uppercase tracking-[0.06em] text-ocean-navy/90"
                   >
                     {theme}
                   </li>
@@ -78,19 +89,20 @@ export default function About() {
               </Parallax>
             </ImageReveal>
 
-            {/* Secondary detail crop from the same photograph — an art-directed
-                inset, not a second image. Left static, no motion of its own. */}
+            {/* Secondary detail inset — a distinct supporting photo (see
+                detailImage above), not a second crop of the main image.
+                Left static, no motion of its own. */}
             <div
               aria-hidden="true"
               className="absolute -bottom-3 -right-3 aspect-square w-24 bg-warm-white p-1.5 sm:-bottom-4 sm:-right-4 sm:w-28 lg:-bottom-8 lg:-right-8 lg:w-36"
             >
               <div className="relative h-full w-full overflow-hidden">
                 <Image
-                  src={image.src}
-                  alt=""
+                  src={detailImage.src}
+                  alt={detailImage.alt}
                   fill
                   sizes="(min-width: 1024px) 144px, (min-width: 640px) 112px, 96px"
-                  className="object-cover object-[58%_52%]"
+                  className="object-cover object-[50%_30%]"
                 />
               </div>
             </div>

@@ -4,13 +4,16 @@ import Reveal from "@/components/motion/Reveal";
 import ImageReveal from "@/components/motion/ImageReveal";
 import Parallax from "@/components/motion/Parallax";
 
-// Reuses an existing client photo already featured in About/Experiences/
-// Gallery. No new asset. Treated as a decorative closing accent rather
-// than new content — alt left empty since this exact photo (and its
-// description) is already presented elsewhere on the page.
+// Photography curation pass: previously reused zenith-coast-03.JPG (already
+// shown in About/Experiences/Gallery/TheWeek at the time). Replaced with a
+// homepage-unique Program photo — three people practising yoga along a
+// dramatic cliff edge — chosen specifically for this closing, emotional
+// slot: adventure, movement and landscape together, with a natural 3:4
+// source ratio that needs no cropping in this box. Not used anywhere else
+// on the page.
 const closingImage = {
-  src: "/images/location/zenith-coast-03.JPG",
-  alt: "",
+  src: "/images/program/IMG_7325.JPG",
+  alt: "Three people practising yoga on mats along a dramatic red-rock cliff edge",
 };
 
 export default function FinalCTA() {

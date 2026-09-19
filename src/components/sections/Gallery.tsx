@@ -78,7 +78,12 @@ export default function Gallery() {
                   alt={dominant.alt}
                   fill
                   sizes={sizeSizesAttr.large}
-                  className={hoverImageClass}
+                  // This source photo is a tall portrait crop (canyon walls
+                  // above a swimmer), notably narrower than this slot's own
+                  // box ratio — biasing toward the lower portion keeps the
+                  // swimmer/pool in frame rather than defaulting to a
+                  // center crop weighted toward the rock face above.
+                  className={`${hoverImageClass} object-[50%_65%]`}
                 />
               </Parallax>
             </div>

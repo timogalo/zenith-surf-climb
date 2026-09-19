@@ -51,8 +51,8 @@ export const siteContent = {
         label: "Ocean",
         copy: "Meet the Atlantic through movement, challenge and freedom.",
         image: {
-          src: "/images/location/zenith-coast-02.JPG",
-          alt: "Sunlit horizon over the Atlantic Ocean along the Moroccan coast",
+          src: "/images/program/7B4E241F-9231-4258-B246-3A01439A101A_VSCO.jpg",
+          alt: "A row of colourful surfboards leaning against a vintage van on a sunny beach",
         },
       },
       {
@@ -61,8 +61,8 @@ export const siteContent = {
         label: "Mountains",
         copy: "From the ocean to the mountains, discover new perspectives and new challenges.",
         image: {
-          src: "/images/location/zenith-coast-03.JPG",
-          alt: "A hiker overlooking the Atlantic coastline and mountains of Morocco",
+          src: "/images/program/IMG_5043.JPG",
+          alt: "A hiker standing atop a large rock formation in the Moroccan mountains",
         },
       },
       {
@@ -71,8 +71,8 @@ export const siteContent = {
         label: "Art & Culture",
         copy: "Slow down, make something and connect with Moroccan culture through creativity.",
         image: {
-          src: "/images/location/zenith-morocco-location-01.JPG",
-          alt: "A traditional Moroccan courtyard with palm trees and earthen architecture",
+          src: "/images/program/IMG_2885_VSCO.jpg",
+          alt: "A hand pouring traditional Moroccan tea on a rooftop terrace at golden hour",
         },
       },
     ],
@@ -181,19 +181,23 @@ export const siteContent = {
     body: "We honor Moroccan heritage by bringing together local traditions, cuisine and community with modern adventure and creativity.",
     themes: ["Traditions", "Cuisine", "Community"],
     image: {
-      src: "/images/location/zenith-morocco-location-01.JPG",
-      alt: "A traditional Moroccan courtyard with palm trees and earthen architecture",
+      src: "/images/program/06b297b3-fc26-43fd-998d-ed19f64b5dd9.jpg",
+      alt: "Vivid cones of spices for sale at a Moroccan souk",
     },
   },
 
   gallery: {
     eyebrow: "Gallery",
     heading: "Moments from Zenith",
+    // Deliberately mixed across pools (2 Paradise Valley + 2 location) so
+    // Gallery reads as a genuine cross-section of the whole Zenith
+    // experience rather than "four Paradise Valley photos" — every image
+    // here is homepage-unique (see the photography curation report).
     images: [
       {
         size: "large",
-        src: "/images/location/zenith-coast-01.JPG",
-        alt: "Close-up view of ocean waves along the Moroccan coast",
+        src: "/images/paradise-valley/paradise-valley-07.jpg",
+        alt: "A person swimming in a turquoise canyon pool surrounded by rock walls in Paradise Valley",
       },
       {
         size: "medium",
@@ -207,8 +211,8 @@ export const siteContent = {
       },
       {
         size: "wide",
-        src: "/images/location/zenith-coast-03.JPG",
-        alt: "A hiker overlooking the Atlantic coastline and mountains of Morocco",
+        src: "/images/paradise-valley/paradise-valley-08.jpg",
+        alt: "A rocky canyon gorge opening onto distant mountains in Paradise Valley",
       },
     ],
   },
