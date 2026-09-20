@@ -12,6 +12,7 @@ import { siteContent } from "@/data/content";
 import Reveal from "@/components/motion/Reveal";
 import WeekSelector from "@/components/booking/WeekSelector";
 import GuestSelector from "@/components/booking/GuestSelector";
+import SocialLinks from "@/components/ui/SocialLinks";
 import {
   formatDayMonth,
   formatFullDate,
@@ -49,6 +50,9 @@ const initialFormState: FormState = {
 // This is a secondary layer, not the primary defense — rate limiting and
 // field validation matter more.
 const HONEYPOT_FIELD_NAME = "website";
+
+const SOCIAL_LINK_CLASS =
+  "inline-flex text-ocean-navy/50 transition-colors hover:text-terracotta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-navy focus-visible:ring-offset-2 focus-visible:ring-offset-warm-sand";
 
 type AvailabilityState =
   | { status: "loading" }
@@ -279,6 +283,15 @@ export default function Booking() {
           <p className="mt-4 max-w-xl font-body text-sm text-charcoal/55">
             {confirmationNote}
           </p>
+          <div className="mt-6 flex items-center gap-3">
+            <p className="font-body text-sm text-charcoal/55">
+              Questions before booking?
+            </p>
+            <SocialLinks
+              linkClassName={SOCIAL_LINK_CLASS}
+              iconClassName="h-4 w-4"
+            />
+          </div>
         </Reveal>
 
         {bookingResult ? (

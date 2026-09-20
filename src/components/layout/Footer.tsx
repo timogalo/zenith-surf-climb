@@ -1,4 +1,8 @@
 import { siteContent } from "@/data/content";
+import SocialLinks from "@/components/ui/SocialLinks";
+
+const SOCIAL_LINK_CLASS =
+  "inline-flex text-warm-white/70 transition-colors hover:text-terracotta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-white focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal";
 
 export default function Footer() {
   const { name, tagline } = siteContent.brand;
@@ -32,9 +36,12 @@ export default function Footer() {
           </nav>
         </div>
 
-        <p className="mt-8 font-body text-xs text-warm-white/50">
-          © {year} {name}
-        </p>
+        <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-body text-xs text-warm-white/50">
+            © {year} {name}
+          </p>
+          <SocialLinks linkClassName={SOCIAL_LINK_CLASS} />
+        </div>
       </div>
     </footer>
   );
