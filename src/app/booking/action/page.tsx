@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import ActionPageShell from "@/components/booking/ActionPageShell";
 import {
   verifyBookingActionToken,
@@ -9,6 +10,14 @@ import { formatFullDate, parseDateId } from "@/lib/weeks";
 // Always evaluated fresh — this reads the current booking status from
 // Supabase on every visit, never prerendered/cached.
 export const dynamic = "force-dynamic";
+
+// Owner-only page reached solely via a signed, single-use link emailed
+// after a new booking — never public content. Indexing protection only;
+// does not affect token verification, the approve/decline flow, or
+// anything else on this page.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 function formatRange(startDateId: string, endDateId: string): string {
   const start = parseDateId(startDateId);

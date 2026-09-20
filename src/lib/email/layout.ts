@@ -9,7 +9,7 @@ export function renderEmailLayout(bodyHtml: string): string {
   return `<div style="font-family:Arial,Helvetica,sans-serif;background:#F8F7F3;padding:32px 16px;">
   <div style="max-width:520px;margin:0 auto;background:#FFFFFF;border-radius:4px;overflow:hidden;">
     <div style="background:#102A43;padding:20px 28px;">
-      <p style="margin:0;color:#F8F7F3;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.75;">Zenith Surf &amp; Climb</p>
+      <p style="margin:0;color:#F8F7F3;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.75;">Zenith Nomads</p>
     </div>
     <div style="padding:28px;color:#102A43;font-size:15px;line-height:1.6;">
       ${bodyHtml}

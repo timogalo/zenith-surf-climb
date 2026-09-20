@@ -8,7 +8,7 @@ import { join } from "node:path";
 // access (Edge, the default for this route type, has no `fs`).
 export const runtime = "nodejs";
 
-export const alt = "Zenith Surf & Climb — a turquoise pool in a Paradise Valley canyon, Morocco";
+export const alt = "Zenith Nomads — a turquoise pool in a Paradise Valley canyon, Morocco";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -84,7 +84,7 @@ export default async function Image() {
               color: "#D9C3A5",
             }}
           >
-            Zenith Surf &amp; Climb
+            Zenith Nomads
           </div>
           <div
             style={{

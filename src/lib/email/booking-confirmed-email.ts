@@ -18,7 +18,7 @@ export function buildBookingConfirmedEmail(booking: BookingRow): EmailContent {
   const html = renderEmailLayout(`
     <h1 style="margin:0 0 16px;font-size:19px;font-weight:600;">Your week is confirmed</h1>
     <p style="margin:0 0 16px;">Hi ${name},</p>
-    <p style="margin:0 0 16px;">Good news — your week at Zenith Surf &amp; Climb is confirmed.</p>
+    <p style="margin:0 0 16px;">Good news — your week at Zenith Nomads is confirmed.</p>
     <p style="margin:0 0 6px;font-size:18px;font-weight:600;color:#C76B44;">${escapeHtml(range)}</p>
     <p style="margin:0 0 20px;opacity:0.75;">${guestsLabel} · €${booking.total_price} total</p>
     <p style="margin:0 0 16px;">No payment has been taken through the website. Zenith will be in touch with next steps and further details ahead of your stay.</p>
@@ -30,7 +30,7 @@ export function buildBookingConfirmedEmail(booking: BookingRow): EmailContent {
     "",
     `Hi ${booking.full_name},`,
     "",
-    "Good news — your week at Zenith Surf & Climb is confirmed.",
+    "Good news — your week at Zenith Nomads is confirmed.",
     "",
     range,
     `${guestsLabel} · €${booking.total_price} total`,

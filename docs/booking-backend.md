@@ -59,8 +59,10 @@ BOOKING_FROM_EMAIL=
   trailing slash. This is a public value (it's what visitors already see
   in their address bar) but is only actually read server-side today.
 - `BOOKING_FROM_EMAIL` — **optional.** A verified Resend sender, e.g.
-  `Zenith Surf & Climb <bookings@zenithsurfclimb.com>`. Leave unset to use
-  Resend's shared testing sender (see below).
+  `Zenith Nomads <bookings@yourdomain.com>` (replace with the actual
+  verified sending domain once one is configured in Resend — not set up
+  yet as of this writing). Leave unset to use Resend's shared testing
+  sender (see below).
 
 **Rate limiting** (Phase 3, optional but recommended):
 

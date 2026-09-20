@@ -1,6 +1,6 @@
 export const siteContent = {
   brand: {
-    name: "Zenith Surf & Climb",
+    name: "Zenith Nomads",
     tagline: "Surf. Climb. Create.",
     supportingLine:
       "From the Atlantic to the mountains, discover Morocco through movement, creativity and community.",

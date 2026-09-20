@@ -21,23 +21,26 @@ const cormorantGaramond = Cormorant_Garamond({
   style: ["italic"],
 });
 
-const title = "Zenith Surf & Climb";
+const title = "Zenith Nomads | Surf, Climb & Create in Morocco";
 const description =
-  "Zenith Surf & Climb is an adventure retreat in Morocco blending surf, climbing and creative workshops with Moroccan culture and community.";
+  "Zenith Nomads is a week-long surf, climbing and creative retreat in Morocco, with accommodation, activities and Moroccan culture included.";
 
-// The final custom domain hasn't been confirmed by the client yet. Prefer
-// NEXT_PUBLIC_SITE_URL (already used elsewhere for booking action links —
-// see docs/booking-backend.md) so this tracks whatever's configured per
-// environment; fall back to the current production Vercel URL only when
-// that isn't set (e.g. local dev without it configured), rather than
-// inventing a client domain that doesn't exist yet.
-const PRODUCTION_FALLBACK_URL = "https://zenith-surf-climbb.vercel.app";
+// Canonical production domain. NEXT_PUBLIC_SITE_URL (already used
+// elsewhere for booking action links — see docs/booking-backend.md) is
+// preferred so this tracks whatever's configured per environment (e.g.
+// http://localhost:3000 locally); the fallback below is the confirmed
+// canonical domain, not a guess, for any environment where that var isn't
+// set.
+const PRODUCTION_FALLBACK_URL = "https://zenithnomads.com";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || PRODUCTION_FALLBACK_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title,
   description,
+  applicationName: "Zenith Nomads",
+  creator: "Zenith Nomads",
+  publisher: "Zenith Nomads",
   alternates: {
     canonical: "/",
   },
@@ -48,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    siteName: title,
+    siteName: "Zenith Nomads",
     type: "website",
     locale: "en_US",
     url: "/",
@@ -60,13 +63,38 @@ export const metadata: Metadata = {
   },
 };
 
+// Conservative Organization JSON-LD — only facts already established
+// elsewhere in this project (name, canonical URL, the same description
+// used above). Deliberately omits address, geo, phone, social profiles,
+// logo, founding date, and any LodgingBusiness/Offer properties, none of
+// which exist as confirmed facts anywhere in this codebase yet.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Zenith Nomads",
+  url: siteUrl,
+  description,
+};
+
+// Escaping "<" defends against the JSON-LD payload ever being able to
+// prematurely close the script tag (e.g. a future field containing
+// "</script>") — not a live risk with today's static, developer-authored
+// content, but the standard safe pattern for embedding JSON-LD.
+const organizationJsonLdScript = JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c");
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${cormorantGaramond.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: organizationJsonLdScript }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,8 +1,8 @@
-# Zenith Surf & Climb
+# Zenith Nomads
 
 ## Project purpose
 
-Zenith Surf & Climb is a premium Moroccan adventure retreat website combining surfing, climbing, creative workshops, Moroccan culture and community.
+Zenith Nomads is a premium Moroccan adventure retreat website combining surfing, climbing, creative workshops, Moroccan culture and community.
 
 This repository currently contains the first visual prototype for client review.
 
@@ -17,7 +17,7 @@ Do not invent missing client information.
 ## Confirmed client content
 
 Brand name:
-Zenith Surf & Climb
+Zenith Nomads
 
 Core concept:
 Surfing, climbing, creative workshops, Moroccan culture, cuisine and community.

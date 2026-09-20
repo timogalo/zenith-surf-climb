@@ -11,7 +11,7 @@ export default function ActionPageShell({ children }: { children: ReactNode }) {
     <main className="flex min-h-screen items-center justify-center bg-warm-white px-6 py-16">
       <div className="w-full max-w-md border border-ocean-navy/10 bg-white px-8 py-10">
         <p className="font-body text-xs uppercase tracking-[0.14em] text-ocean-navy/45">
-          Zenith Surf &amp; Climb
+          Zenith Nomads
         </p>
         <div className="mt-5">{children}</div>
       </div>

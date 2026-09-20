@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import ActionPageShell from "@/components/booking/ActionPageShell";
 
 export const dynamic = "force-dynamic";
+
+// Landing page after an owner approve/decline action — never public
+// content. Indexing protection only; no effect on the redirect/outcome
+// logic below.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 const OUTCOMES = {
   confirmed: { title: "Booking confirmed.", body: "The customer has been notified." },

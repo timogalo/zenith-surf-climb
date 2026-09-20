@@ -23,7 +23,7 @@ function getResendClient(): Resend {
 // development, not for real guests/owner in production. Once a real
 // sending domain is verified in Resend, set BOOKING_FROM_EMAIL and this
 // fallback is never used. See docs/booking-backend.md.
-const DEFAULT_DEV_FROM_EMAIL = "Zenith Surf & Climb <onboarding@resend.dev>";
+const DEFAULT_DEV_FROM_EMAIL = "Zenith Nomads <onboarding@resend.dev>";
 
 function getFromEmail(): string {
   return process.env.BOOKING_FROM_EMAIL?.trim() || DEFAULT_DEV_FROM_EMAIL;

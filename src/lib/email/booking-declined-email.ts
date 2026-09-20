@@ -28,7 +28,7 @@ export function buildBookingDeclinedEmail(booking: BookingRow): EmailContent {
   const html = renderEmailLayout(`
     <h1 style="margin:0 0 16px;font-size:19px;font-weight:600;">Update on your booking request</h1>
     <p style="margin:0 0 16px;">Hi ${name},</p>
-    <p style="margin:0 0 16px;">Thank you for your interest in Zenith Surf &amp; Climb. Unfortunately we're not able to confirm your requested week:</p>
+    <p style="margin:0 0 16px;">Thank you for your interest in Zenith Nomads. Unfortunately we're not able to confirm your requested week:</p>
     <p style="margin:0 0 20px;font-weight:600;">${escapeHtml(range)}</p>
     <p style="margin:0;">Please feel free to return to the site and choose another available week — we'd love to host you.</p>
     ${bookingLinkHtml}
@@ -39,7 +39,7 @@ export function buildBookingDeclinedEmail(booking: BookingRow): EmailContent {
     "",
     `Hi ${booking.full_name},`,
     "",
-    "Thank you for your interest in Zenith Surf & Climb. Unfortunately we're not able to confirm your requested week:",
+    "Thank you for your interest in Zenith Nomads. Unfortunately we're not able to confirm your requested week:",
     "",
     range,
     "",
