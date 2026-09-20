@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { siteContent } from "@/data/content";
 
 export default function Navbar() {
@@ -14,12 +15,12 @@ export default function Navbar() {
         aria-label="Primary"
         className="mx-auto flex max-w-7xl items-center justify-between px-6 py-7 sm:px-8 lg:px-12"
       >
-        <a
-          href="#"
+        <Link
+          href="/"
           className="font-heading text-xl font-semibold tracking-tight text-warm-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-white focus-visible:ring-offset-2 focus-visible:ring-offset-ocean-navy sm:text-2xl"
         >
           {name}
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-12 lg:flex">
           {links.map((link) => (

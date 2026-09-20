@@ -18,7 +18,7 @@ export function buildOwnerBookingEmail(
   links: OwnerActionLinks
 ): EmailContent {
   const range = formatBookingRange(booking.start_date, booking.end_date);
-  const subject = `New Zenith booking request — ${range}`;
+  const subject = `New Zenith Nomads booking request — ${range}`;
 
   const rows: Array<[string, string]> = [
     ["Full name", booking.full_name],

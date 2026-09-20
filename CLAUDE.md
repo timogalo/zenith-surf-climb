@@ -2,15 +2,15 @@
 
 ## Project purpose
 
-Zenith Nomads is a premium Moroccan adventure retreat website combining surfing, climbing, creative workshops, Moroccan culture and community.
-
-This repository currently contains the first visual prototype for client review.
+Zenith Nomads is a premium Moroccan adventure retreat combining surfing,
+climbing, creative workshops, Moroccan culture and community.
 
 ## Current phase
 
-Prototype v0.1
-
-The goal is to create a polished homepage that communicates the visual direction of the project.
+Production. This repository is the live Zenith Nomads marketing and booking
+website, deployed at **https://zenithnomads.com**. It is not a prototype —
+treat existing implemented behavior (booking, pricing, backend integrations)
+as approved and load-bearing, not placeholder.
 
 Do not invent missing client information.
 
@@ -35,19 +35,51 @@ Do not copy its layout, code, text, branding or distinctive design elements.
 - Hero
 - About Zenith
 - Surf / Climb / Create
+- The Week / programme carousel
+- Stay
+- Package
+- Paradise Valley
 - Moroccan Experience
 - Gallery
+- Booking
 - Final CTA
-- Footer
+- Footer (with Instagram + WhatsApp contact links)
 
-Do not implement yet:
-- prices
-- packages
-- accommodation details
-- online booking
-- payments
-- final FAQ
-- legal pages
+## Booking system (production)
+
+A real booking-request workflow is implemented — this is not a future task:
+
+- Weeks run **Monday → Monday** (7 nights). Availability is generated
+  client-side from the visitor's current date (`src/lib/weeks.ts`).
+- Price is **€900 per person**, computed server-side
+  (`src/lib/booking/validation.ts`), never trusted from the client.
+- There is **no arbitrary guest-count business cap** — `GuestSelector` has no
+  configured maximum; a large technical safety ceiling exists purely to
+  prevent integer overflow / abuse, and must never be presented to the
+  customer as "our capacity."
+- Submitting the form creates a **pending booking request** — not a
+  confirmed reservation, and **no online payment is taken anywhere on the
+  site**.
+- The owner reviews and **approves or declines** each request via signed,
+  expiring links sent by email (`src/lib/booking/action-token.ts`,
+  `src/app/api/booking-action/route.ts`, `src/app/booking/action/**`).
+- **Only `blocked_weeks` controls availability.** A confirmed booking does
+  **not** automatically block its week — the owner manages `blocked_weeks`
+  separately. Do not change this behavior without an explicit client
+  decision; see `docs/booking-backend.md` for the full rationale.
+
+## Production backend
+
+- **Supabase** (service-role, server-only) is the database for `bookings`
+  and `blocked_weeks`, with RLS enabled and no anon/authenticated policies —
+  all access goes through this app's own API routes.
+- **Resend** sends transactional email (owner notification, customer
+  confirmation, customer decline) from `bookings@zenithnomads.com`.
+- **Upstash Redis** provides distributed rate limiting on booking creation
+  and approve/reject actions; it fails open (never blocks legitimate use) if
+  unconfigured.
+- See `.env.example` and `docs/booking-backend.md` for the full environment
+  variable contract. Never print or commit secret values.
 
 ## Design direction
 
@@ -130,6 +162,7 @@ Use the accent font sparingly.
 - Next.js App Router
 - TypeScript
 - Tailwind CSS
+- Supabase, Resend, Upstash (booking backend)
 
 Additional dependencies must not be added without approval.
 
@@ -147,13 +180,16 @@ Additional dependencies must not be added without approval.
 - Do not invent client facts.
 - Keep placeholder content clearly identified internally.
 - Run lint and build after meaningful changes.
+- Never print or commit secret/environment variable values.
 
 ## Known content risks (internal — not for client-facing copy)
 
-- The Surf / Climb / Create section (`src/data/content.ts` → `experiences`) reuses the four general location photos in `public/images/location/` — there is no dedicated per-pillar (surf/climb/create-specific) photography yet. `zenith-coast-03.JPG` is shared between the About section and the Climb block for the same reason.
-- The Moroccan Experience section (`src/data/content.ts` → `morocco`) has no dedicated cuisine/traditions/community photography available. It reuses `zenith-morocco-location-01.JPG` (courtyard/riad architecture) — the same image already used in the Experiences → Create block. This is now used in two sections; the layout keeps it small/secondary rather than presenting it as documentary proof of cuisine or traditions, but it should be replaced with dedicated Moroccan culture photography once the client provides it.
-- `public/images/location/` currently contains only 4 unique client photos, and all 4 are now in active use across Hero, About, Experiences, Morocco and Gallery. The Gallery section (`src/data/content.ts` → `gallery`) reuses all four rather than introducing new material, since no additional licensed photography exists. The homepage is fully out of unique imagery — any further sections needing photography (Final CTA, Footer) will need either new client assets or a non-photographic treatment.
-- Replace with confirmed, pillar-specific client photography once available, and update alt text accordingly.
+- The Moroccan Experience section (`src/data/content.ts` → `morocco`) has no
+  dedicated cuisine/traditions/community photography. It reuses a general
+  location/courtyard photo also used elsewhere; the layout keeps it
+  small/secondary rather than presenting it as documentary proof of cuisine
+  or traditions. Replace with dedicated Moroccan culture photography once
+  the client provides it, and update alt text accordingly.
 
 ## Workflow
 
@@ -171,12 +207,8 @@ After implementation:
 3. Summarize changed files.
 4. Mention any remaining issues.
 
-<!-- BEGIN:nextjs-agent-rules -->
-
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
