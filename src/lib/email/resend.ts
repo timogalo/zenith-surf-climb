@@ -17,16 +17,17 @@ function getResendClient(): Resend {
   return cachedClient;
 }
 
-// Resend's shared testing sender. It works without a verified domain, but
-// (per Resend's own restriction) only actually delivers to the email
-// address the Resend account itself is registered with — fine for local
-// development, not for real guests/owner in production. Once a real
-// sending domain is verified in Resend, set BOOKING_FROM_EMAIL and this
-// fallback is never used. See docs/booking-backend.md.
-const DEFAULT_DEV_FROM_EMAIL = "Zenith Nomads <onboarding@resend.dev>";
+// zenithnomads.com is now verified in Resend, so this is the real default
+// sender for every transactional booking email (owner notification,
+// customer confirmation, customer decline — all of them go through
+// sendTransactionalEmail below, so changing this one constant updates all
+// of them consistently). BOOKING_FROM_EMAIL remains available as an
+// override (e.g. pointing at a different verified address later) — see
+// docs/booking-backend.md.
+const DEFAULT_FROM_EMAIL = "Zenith Nomads <bookings@zenithnomads.com>";
 
 function getFromEmail(): string {
-  return process.env.BOOKING_FROM_EMAIL?.trim() || DEFAULT_DEV_FROM_EMAIL;
+  return process.env.BOOKING_FROM_EMAIL?.trim() || DEFAULT_FROM_EMAIL;
 }
 
 export type SendEmailInput = {

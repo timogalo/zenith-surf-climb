@@ -58,11 +58,12 @@ BOOKING_FROM_EMAIL=
   links embedded in owner emails, e.g. `http://localhost:3000` locally, no
   trailing slash. This is a public value (it's what visitors already see
   in their address bar) but is only actually read server-side today.
-- `BOOKING_FROM_EMAIL` — **optional.** A verified Resend sender, e.g.
-  `Zenith Nomads <bookings@yourdomain.com>` (replace with the actual
-  verified sending domain once one is configured in Resend — not set up
-  yet as of this writing). Leave unset to use Resend's shared testing
-  sender (see below).
+- `BOOKING_FROM_EMAIL` — **optional.** Overrides the sender for all
+  transactional booking emails. `zenithnomads.com` is now verified in
+  Resend, so leaving this unset already defaults to
+  `Zenith Nomads <bookings@zenithnomads.com>` (see
+  `src/lib/email/resend.ts`) — only set this if you need a different
+  sender for some reason (see below).
 
 **Rate limiting** (Phase 3, optional but recommended):
 
@@ -84,14 +85,15 @@ files on server start.
 
 1. Create a Resend account and an API key (resend.com/api-keys) → put it
    in `RESEND_API_KEY`.
-2. **Sender domain:** until you verify a real domain in Resend, leave
-   `BOOKING_FROM_EMAIL` unset. The code falls back to Resend's shared
-   testing sender (`onboarding@resend.dev`), which works with no setup but
-   **only delivers to the email address your Resend account itself is
-   registered with** — fine for local testing, not for real guests. Once
-   you verify a domain (Resend → Domains → Add Domain, then the DNS
-   records they give you), set `BOOKING_FROM_EMAIL` to an address at that
-   domain and every recipient works normally.
+2. **Sender domain:** `zenithnomads.com` is verified in Resend. The default
+   sender (`src/lib/email/resend.ts`, used whenever `BOOKING_FROM_EMAIL` is
+   unset) is `Zenith Nomads <bookings@zenithnomads.com>`, which delivers
+   normally to any recipient — no further setup needed. If you ever need a
+   different sender (e.g. Resend's shared testing sender,
+   `onboarding@resend.dev`, for local testing without emailing real
+   inboxes — note it only delivers to the email address your Resend
+   account itself is registered with), set `BOOKING_FROM_EMAIL` to
+   override it.
 3. Set `BOOKING_OWNER_EMAIL` to wherever new-booking notifications should
    land.
 
