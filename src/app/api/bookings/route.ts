@@ -21,6 +21,14 @@ export const dynamic = "force-dynamic";
 // generous multi-byte UTF-8), small enough to block multi-megabyte abuse.
 const MAX_BOOKING_BODY_BYTES = 10 * 1024;
 
+// Must match the SQLSTATE the bookings_prevent_blocked_week() trigger
+// raises with (supabase/migrations/0003_bookings_blocked_week_trigger.sql).
+// Lets the catch below tell "the DB-level blocked-week invariant fired"
+// apart from any other insert failure via Postgres's own error code,
+// rather than matching on the (unstable, not-meant-for-parsing) message
+// text.
+const BLOCKED_WEEK_TRIGGER_ERROR_CODE = "ZW001";
+
 /**
  * Creates a booking REQUEST — not a confirmed reservation. Every row is
  * inserted with status "pending"; the owner reviews and confirms/declines
@@ -149,8 +157,31 @@ export async function POST(request: Request) {
     .select("*")
     .single();
 
-  if (insertError || !inserted) {
-    console.error("[bookings] insert failed:", insertError?.message);
+  if (insertError) {
+    // The application-level check above (lines ~113-130) already
+    // returns 409 for the normal case. This specific code means the
+    // database's own bookings_prevent_blocked_week() trigger fired
+    // instead — only possible if a week was blocked in the narrow
+    // window between that check and this insert (see the migration for
+    // why both layers exist). Surface the exact same public response as
+    // the normal check, never a raw database error.
+    if (insertError.code === BLOCKED_WEEK_TRIGGER_ERROR_CODE) {
+      return apiError(
+        409,
+        "WEEK_UNAVAILABLE",
+        "This week is no longer available. Please choose another date."
+      );
+    }
+    console.error("[bookings] insert failed:", insertError.message);
+    return apiError(
+      500,
+      "SERVER_ERROR",
+      "Unable to submit your request right now. Please try again."
+    );
+  }
+
+  if (!inserted) {
+    console.error("[bookings] insert returned no row");
     return apiError(
       500,
       "SERVER_ERROR",

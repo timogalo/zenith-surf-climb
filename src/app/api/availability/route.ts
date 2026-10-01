@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { apiError } from "@/lib/api/errors";
-import { addDays, toDateId } from "@/lib/weeks";
+import { listUpcomingBlockedStartDates } from "@/lib/availability/blocked-weeks";
 
 // Reads live data on every request — never statically cache this route.
 export const dynamic = "force-dynamic";
@@ -11,6 +11,10 @@ export const dynamic = "force-dynamic";
  * weeks — never booking records, never any customer information. This is
  * the sole source of "unavailable" state for the booking UI; the frontend
  * treats every generated week as available unless its id appears here.
+ *
+ * Shares its query (src/lib/availability/blocked-weeks.ts) with the admin
+ * Availability page (src/app/admin/availability/page.tsx) — one
+ * definition of "still relevant," not two.
  */
 export async function GET() {
   let supabase;
@@ -25,26 +29,8 @@ export async function GET() {
     );
   }
 
-  // Exclude weeks that are unambiguously over. The frontend only ever
-  // generates weeks starting from the next upcoming Monday on/after
-  // "today" (src/lib/weeks.ts), so nothing it could render would ever
-  // match a blocked_weeks row whose stay already ended. Filtering on
-  // end_date (not start_date) is the more conservative choice: it keeps
-  // a week that's still technically in progress, and — combined with a
-  // one-day-earlier cutoff — absorbs any small clock skew between the
-  // server's "today" and a visitor's local "today" rather than risking
-  // hiding a blocked week that's still relevant to someone. This is a
-  // response-size optimization only; it doesn't change Monday-to-Monday
-  // logic or which *future* weeks are considered blocked.
-  const cutoffDateId = toDateId(addDays(new Date(), -1));
-
-  const { data, error } = await supabase
-    .from("blocked_weeks")
-    .select("start_date")
-    .gte("end_date", cutoffDateId);
-
-  if (error) {
-    console.error("[availability] blocked_weeks query failed:", error.message);
+  const result = await listUpcomingBlockedStartDates(supabase);
+  if (!result.ok) {
     return apiError(
       500,
       "SERVER_ERROR",
@@ -52,7 +38,5 @@ export async function GET() {
     );
   }
 
-  const blockedWeeks = (data ?? []).map((row) => row.start_date);
-
-  return NextResponse.json({ blockedWeeks });
+  return NextResponse.json({ blockedWeeks: result.startDates });
 }

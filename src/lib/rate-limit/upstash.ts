@@ -14,7 +14,7 @@ import { Redis } from "@upstash/redis";
 // every booking — see getLimiter() below. A missing/misconfigured
 // anti-abuse layer must never take down the booking form itself.
 
-export type LimiterName = "bookingCreate" | "bookingAction";
+export type LimiterName = "bookingCreate" | "bookingAction" | "adminLogin" | "adminChangePassword";
 
 const LIMITER_CONFIG: Record<
   LimiterName,
@@ -27,6 +27,19 @@ const LIMITER_CONFIG: Record<
   // automated hammering, not a primary control, and must not make
   // legitimate owner clicks flaky.
   bookingAction: { requests: 30, window: "10 m", prefix: "zenith:ratelimit:booking-action" },
+  // The admin password IS the real authorization check here — this backs
+  // it up against brute-forcing, tight enough to slow a script down but
+  // generous enough that Adriana mistyping her password a few times in a
+  // row never locks her out.
+  adminLogin: { requests: 10, window: "10 m", prefix: "zenith:ratelimit:admin-login" },
+  // Same reasoning as adminLogin — the current-password check is the
+  // real control here; this only slows down someone brute-forcing it
+  // from a stolen-but-still-valid admin session.
+  adminChangePassword: {
+    requests: 10,
+    window: "10 m",
+    prefix: "zenith:ratelimit:admin-change-password",
+  },
 };
 
 let redisClient: Redis | null | undefined; // undefined = not checked yet

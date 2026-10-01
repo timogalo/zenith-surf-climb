@@ -62,6 +62,23 @@ type BlockedWeekInsert = {
   created_at?: string;
 };
 
+// Matches supabase/migrations/0002_admin_credentials.sql. Singleton row
+// (id is always "singleton" — enforced by a DB check constraint), so
+// `id` is typed as a literal rather than a general string.
+export type AdminCredentialRow = {
+  id: "singleton";
+  password_hash: string;
+  session_version: number;
+  updated_at: string;
+};
+
+type AdminCredentialInsert = {
+  id?: "singleton";
+  password_hash: string;
+  session_version?: number;
+  updated_at?: string;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -75,6 +92,12 @@ export type Database = {
         Row: BlockedWeekRow;
         Insert: BlockedWeekInsert;
         Update: Partial<BlockedWeekInsert>;
+        Relationships: [];
+      };
+      admin_credentials: {
+        Row: AdminCredentialRow;
+        Insert: AdminCredentialInsert;
+        Update: Partial<AdminCredentialInsert>;
         Relationships: [];
       };
     };

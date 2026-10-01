@@ -15,13 +15,20 @@ import "server-only";
  * present (e.g. local dev without a proxy) rather than skipping rate
  * limiting outright.
  */
-export function getClientIp(request: Request): string {
-  const realIp = request.headers.get("x-real-ip");
+/**
+ * Same extraction, factored out so callers that only have a Headers
+ * object — e.g. an admin Server Action reading `await headers()` from
+ * `next/headers`, which has no Request to hand getClientIp() below —
+ * can rate-limit by the same trusted headers without duplicating this
+ * logic. Behavior-identical extraction, not a new trust decision.
+ */
+export function getClientIpFromHeaders(headers: Pick<Headers, "get">): string {
+  const realIp = headers.get("x-real-ip");
   if (realIp) {
     return realIp.trim();
   }
 
-  const forwardedFor = request.headers.get("x-forwarded-for");
+  const forwardedFor = headers.get("x-forwarded-for");
   if (forwardedFor) {
     const first = forwardedFor.split(",")[0]?.trim();
     if (first) {
@@ -30,4 +37,8 @@ export function getClientIp(request: Request): string {
   }
 
   return "unknown";
+}
+
+export function getClientIp(request: Request): string {
+  return getClientIpFromHeaders(request.headers);
 }

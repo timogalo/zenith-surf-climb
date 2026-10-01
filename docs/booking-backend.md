@@ -6,9 +6,10 @@ server-side (**Phase 1**). The owner is now emailed on every new request
 with signed Approve/Reject links, and the customer is emailed once the
 owner acts (**Phase 2**). Rate limiting, a honeypot, request-size limits,
 and stricter secret validation harden the public-facing endpoints against
-abuse (**Phase 3**). There is still no admin dashboard, no CAPTCHA, and no
-capacity logic — everything owner-facing happens by email or directly in
-Supabase.
+abuse (**Phase 3**). A private `/admin` dashboard now lets the owner list
+and approve/reject bookings without opening Supabase (**Phase 4** — see
+`docs/admin-dashboard.md`). There is still no CAPTCHA and no capacity
+logic.
 
 ## 1. Required environment variables
 
@@ -141,16 +142,23 @@ delete from blocked_weeks where start_date = '2026-10-12';
 
 ## 6. Approving / declining a booking
 
-**Normal path:** the owner email for each new request (sent to
-`BOOKING_OWNER_EMAIL`) contains an **Approve** and a **Reject** button.
+**Normal path — email link:** the owner email for each new request (sent
+to `BOOKING_OWNER_EMAIL`) contains an **Approve** and a **Reject** button.
 Clicking one opens a minimal Zenith-branded confirmation page
 (`/booking/action?token=...`) showing the customer, week, and guest count;
 submitting that page's button is what actually changes the status and
 emails the customer. Opening the link alone (e.g. an email client's
 preview scanner) never changes anything — only the POST does.
 
-**Manual fallback**, e.g. if an email was never delivered — inspect and
-update directly:
+**Normal path — admin dashboard:** sign in at `/admin` to see every
+booking (not just the ones still pending) and approve/reject directly
+from there. See `docs/admin-dashboard.md` for setup and day-to-day use.
+Both paths call the exact same underlying function
+(`src/lib/booking/apply-booking-action.ts`) — there is one implementation
+of "confirm or decline a booking," not two.
+
+**Manual fallback**, e.g. if an email was never delivered and `/admin` is
+also unavailable — inspect and update directly:
 
 ```sql
 select id, start_date, end_date, guests, total_price, full_name, email,
@@ -329,7 +337,6 @@ how the body arrived.
 
 By design, this project does **not** include:
 
-- Admin login or dashboard
 - Payments (Stripe or otherwise)
 - Cancellation workflow / links
 - Capacity thresholds or automatic blocking based on approved guest counts
@@ -356,7 +363,9 @@ separately** — do not assume the same values are safe in both:
   (the final `https://` domain — action links are built from this at
   send-time and won't retroactively fix already-sent emails if the domain
   changes later), `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`,
-  `RESEND_API_KEY`, `BOOKING_OWNER_EMAIL`, `BOOKING_ACTION_SECRET`.
+  `RESEND_API_KEY`, `BOOKING_OWNER_EMAIL`, `BOOKING_ACTION_SECRET`,
+  `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` (see
+  `docs/admin-dashboard.md` for how to generate the latter two).
 - If rate limiting is enabled, also set `UPSTASH_REDIS_REST_URL` /
   `UPSTASH_REDIS_REST_TOKEN` for Production. Without them, `POST
   /api/bookings` and `POST /api/booking-action` still work correctly —
@@ -385,15 +394,22 @@ Browser (Booking.tsx)
 Owner email → GET  /booking/action?token=...   (verify + show, no mutation)
             → POST /api/booking-action         (size guard → rate limit →
                                                  verify token again →
-                                                 conditional
+                                                 applyBookingAction(): conditional
                                                  pending→confirmed/declined
                                                  update → best-effort emails
                                                  the customer)
             → redirect to /booking/action/result
+
+Admin dashboard → GET  /admin/login   (src/proxy.ts gates /admin/**)
+                → Server Action: verify password → sign session cookie
+                → GET  /admin         (requireAdminSession() → lists all bookings)
+                → Server Action: requireAdminSession() → applyBookingAction()
+                                 (same shared function as the email path above)
 ```
 
 The browser never holds Supabase or Resend credentials and never queries
 Supabase directly. Both tables have Row Level Security enabled with **no
 policies** for the `anon`/`authenticated` roles, so all client access is
 denied by default; only the service-role server client (which bypasses
-RLS entirely, by design) can read or write.
+RLS entirely, by design) can read or write. See `docs/admin-dashboard.md`
+for the admin auth design in full.
